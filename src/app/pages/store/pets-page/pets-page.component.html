@@ -1,0 +1,92 @@
+<div class="uk-container">
+  <nav class="uk-navbar-container" uk-navbar>
+    <div class="uk-navbar-left">
+      <ul class="uk-navbar-nav">
+        <li class="uk-active">Meus Pets</li>
+      </ul>
+    </div>
+    <div class="uk-navbar-right">
+      <ul class="uk-navbar-nav">
+        <li class="uk-active" (click)="show()">
+          <a
+            ><span
+              class="uk-icon uk-margin-small-right"
+              uk-icon="icon: plus"
+            ></span
+            >Adicionar</a
+          >
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Tela para adicionar o pet -->
+  <div class="addPet" *ngIf="addClick">
+    <form [formGroup]="form">
+      <div class="icon"><button (click)="show()">X</button></div>
+      <h3 class="uk-text-center">Adicione o Seu Pet</h3>
+      <div class="uk-margin sideMargin">
+        <input
+          class="uk-input input-form"
+          type="text"
+          placeholder="Nome do Pet"
+          formControlName="name"
+        />
+      </div>
+      <div class="uk-margin sideMargin">
+        <textarea
+          placeholder="Idade, Raça, Cor, etc..."
+          class="uk-textarea"
+          rows="5"
+          formControlName="description"
+        ></textarea>
+      </div>
+      <div class="uk-margin sideMargin">
+        <label>Adicione uma foto: </label>
+        <input type="file" (change)="fileChange($event)" accept="image/jpge" />
+      </div>
+
+      <button
+        class="uk-button uk-button-default uk-margin-medium-top uk-margin-large-bottom uk-button-primary"
+        (click)="addPet()"
+        [disabled]="form.invalid"
+      >
+        Adicionar Pet
+      </button>
+    </form>
+  </div>
+
+  <!-- No video tinha uma div a mais -->
+  <div class="uk-container">
+    <div class="uk-grid uk-margin-small-top">
+      <div
+        class="uk-width-1-4@m uk-margin-small-bottom"
+        *ngFor="let pet of pets.petModel"
+      >
+        <div class="uk-card uk-card-default">
+          <div class="uk-card-media-top">
+            <br />
+            <p class="uk-text-center">
+              <img src="{{ pet.image }}" class="petImg" />
+            </p>
+          </div>
+          <div class="uk-card-body">
+            <h3 class="uk-card-title">{{ pet.name }}</h3>
+            <p>
+              {{ pet.description }}
+            </p>
+            <p class="uk-button uk-button-default" (click)="remove(pet)">
+              <a
+                ><span
+                  class="uk-icon uk-margin-small-right"
+                  uk-icon="icon: pencil"
+                ></span
+                >Excluir</a
+              >
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

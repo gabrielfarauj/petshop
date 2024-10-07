@@ -1,0 +1,81 @@
+.addPet {
+    position: relative;
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.addPet form {
+    position: fixed;
+    top: 30%;
+    z-index: 1;
+    max-width: 60%;
+    min-width: 40%;
+    border: 1px solid #ff8429;
+    background-color: white;
+}
+
+.sideMargin {
+    margin: 0 5em;
+}
+
+textarea {
+    resize: none;
+}
+
+.icon {
+    position: relative;
+    width: 100%;
+    text-align: end;
+    content: '';
+}
+
+.icon button {
+    position: static;
+    right: 0;
+    background-color: #efefee;
+    border: none;
+    padding: 10px;
+    animation: 0.5s;
+    font-size: 16px;
+}
+
+.icon button:hover {
+    background-color: red;
+    color: white;
+    cursor: pointer;
+}
+
+.buttons {
+    display: flex;
+    justify-content: space-between;
+}
+
+.buttons a {
+    line-height: 38px;
+    font-size: 0.875em;
+    border: 1px solid #efefee;
+    padding: 0 0.7em;
+    text-decoration: none;
+}
+
+.petImg {
+    width: 90%;
+    padding: 1rem;
+    border-radius: 100%;
+    object-fit: cover;
+}
+
+@media (max-width: 720px){
+    .addPet form {
+        width: 100%;
+        max-width: 90%;
+    }
+
+    .sideMargin {
+        display: block;
+        width: 90%;
+    }
+}
