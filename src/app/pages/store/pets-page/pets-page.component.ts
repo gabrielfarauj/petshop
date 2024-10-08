@@ -1,10 +1,12 @@
-import { Component, OnChanges, OnInit } from '@angular/core';
 import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+  AfterViewInit,
+  Component,
+  ElementRef,
+  OnInit,
+  Renderer2,
+  ViewChild,
+} from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PetItem } from 'src/app/models/pet-item.model';
 import { Pet } from 'src/app/models/pet.model';
 import { PetUtil } from 'src/app/utils/pet.utils';
@@ -14,19 +16,40 @@ import { PetUtil } from 'src/app/utils/pet.utils';
   templateUrl: './pets-page.component.html',
   styleUrl: './pets-page.component.css',
 })
-export class PetsPageComponent implements OnInit {
+export class PetsPageComponent implements OnInit, AfterViewInit {
+  @ViewChild('toggleMenu') toggleMenu: ElementRef;
+  @ViewChild('menu') menu: ElementRef;
+
   addClick = false;
   form!: FormGroup;
   pets: Pet = new Pet();
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder, private renderer: Renderer2) {}
+
+  ngAfterViewInit(): void {
+    // Essa parte é dedicada a fechar a tela que aparece quando o click for fora dela!
+    // Renderer esta detectando quando o click é em algum lugar da tela e pegando o local do click com o evento
+    this.renderer.listen('window', 'click', (e: Event) => {
+      /**
+       * E então eu estou comparando o local do click (e) com o elemento responsavel pela tela e como os filho dela e o com o local do botão, e se o
+       * click for fora desta área, eu vou fechar a tela que esta aparecendo no momento.
+       */
+      if (
+        e.target !== this.toggleMenu.nativeElement &&
+        e.target !== this.menu.nativeElement &&
+        !this.menu.nativeElement.contains(e.target)
+      ) {
+        this.addClick = false;
+      }
+    });
+  }
 
   ngOnInit() {
     this.pets = PetUtil.get();
 
     this.form = this.fb.group({
       name: [
-         '',
+        '',
         Validators.compose([
           Validators.required,
           Validators.maxLength(30),
@@ -41,10 +64,7 @@ export class PetsPageComponent implements OnInit {
           Validators.minLength(12),
         ]),
       ],
-      image: [
-        '',
-        Validators.required,
-      ],
+      image: ['', Validators.required],
     });
   }
 
@@ -53,30 +73,24 @@ export class PetsPageComponent implements OnInit {
   }
 
   fileChange($event) {
-    let file = $event.target.files[0];
-    let image64;
-    console.log($event.target.files[0].type);
+    let file: File = $event.target.files[0];
+    let reader = new FileReader();
+    console.log(file);
 
+    // Eu so aceitarei imagem se ela for do tipo JPEG
     if (file.type !== 'image/jpeg') {
       this.form.controls['image'].reset();
       return false;
     }
 
-    let reader = new FileReader();
-
-    
-    reader.onload = function(event){
-      console.log(event)
-      image64 = event.target.result
-    }
-    
     reader.readAsDataURL(file);
-    
-    this.form.controls['image'].setValue(image64 ? image64 : '');
-    // reader.addEventListener('load', () => {
-    //   const url = reader.result;
+    reader.onload = () => {
+      const image64 = reader.result;
+      this.form.patchValue({image: image64})
+    };
 
-    // });
+
+    // this.form.controls['image'].setValue(file);
   }
 
   addPet() {

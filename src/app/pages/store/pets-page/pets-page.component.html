@@ -8,8 +8,8 @@
     <div class="uk-navbar-right">
       <ul class="uk-navbar-nav">
         <li class="uk-active" (click)="show()">
-          <a
-            ><span
+          <a #toggleMenu
+            ><span 
               class="uk-icon uk-margin-small-right"
               uk-icon="icon: plus"
             ></span
@@ -21,9 +21,10 @@
   </nav>
 
   <!-- Tela para adicionar o pet -->
-  <div class="addPet" *ngIf="addClick">
-    <form [formGroup]="form">
-      <div class="icon"><button (click)="show()">X</button></div>
+  <div class="addPet" *ngIf="addClick" >
+    <form [formGroup]="form" #menu>
+      <div class="icon"><button (click)="addClick = false">X</button></div>
+      <br />
       <h3 class="uk-text-center">Adicione o Seu Pet</h3>
       <div class="uk-margin sideMargin">
         <input
@@ -41,7 +42,8 @@
           formControlName="description"
         ></textarea>
       </div>
-      <div class="uk-margin sideMargin">
+
+      <div class="uk-margin photoInput sideMargin">
         <label>Adicione uma foto: </label>
         <input type="file" (change)="fileChange($event)" accept="image/jpge" />
       </div>
@@ -75,8 +77,8 @@
             <p>
               {{ pet.description }}
             </p>
-            <p class="uk-button uk-button-default" (click)="remove(pet)">
-              <a
+            <p (click)="remove(pet)">
+              <a class="uk-button uk-button-default"
                 ><span
                   class="uk-icon uk-margin-small-right"
                   uk-icon="icon: pencil"

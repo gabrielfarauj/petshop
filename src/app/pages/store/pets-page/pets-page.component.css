@@ -1,35 +1,31 @@
-.addPet {
+.uk-container {
     position: relative;
-    display: flex;
-    width: 100%;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
+}
+
+.addPet {
+    box-sizing: content-box;
+    position: absolute;
+    top: 70%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+    border: 1px solid #ff8429;
+    background-color: white;
+    width: 90%;
+    max-width: 700px;
 }
 
 .addPet form {
-    position: fixed;
-    top: 30%;
-    z-index: 1;
-    max-width: 60%;
-    min-width: 40%;
-    border: 1px solid #ff8429;
-    background-color: white;
-}
-
-.sideMargin {
-    margin: 0 5em;
-}
-
-textarea {
-    resize: none;
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .icon {
-    position: relative;
-    width: 100%;
-    text-align: end;
-    content: '';
+    position: absolute;
+    right: 0;
 }
 
 .icon button {
@@ -48,17 +44,24 @@ textarea {
     cursor: pointer;
 }
 
-.buttons {
-    display: flex;
-    justify-content: space-between;
+.sideMargin {
+    width: 90%;
 }
 
-.buttons a {
-    line-height: 38px;
-    font-size: 0.875em;
-    border: 1px solid #efefee;
-    padding: 0 0.7em;
-    text-decoration: none;
+textarea {
+    resize: none;
+}
+
+
+
+.icon .uk-button {
+    transition: 0.5s;
+}
+
+.icon .uk-button:hover {
+    background-color: #ff8429;
+    border-color: #ff8429;
+    color: white;
 }
 
 .petImg {
@@ -68,14 +71,14 @@ textarea {
     object-fit: cover;
 }
 
-@media (max-width: 720px){
-    .addPet form {
-        width: 100%;
-        max-width: 90%;
-    }
+.uk-card {
+    max-width: 300px;
+}
 
-    .sideMargin {
-        display: block;
-        width: 90%;
+@media (max-width: 720px){
+    .addPet{
+        top: 10%;
+        left: 15%;
+        transform: translate(-10%, -10%);
     }
 }

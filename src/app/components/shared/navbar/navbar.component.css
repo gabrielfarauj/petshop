@@ -1,5 +1,10 @@
 #btn-mobile {
     display: none;
+    cursor: pointer;
+}
+
+.material-symbols-outlined {
+    font-family: 'Material Symbols Outlined' !important;
 }
 
 @media (max-width: 740px){
@@ -19,6 +24,7 @@
     }
 
     .navbar {
+        margin-bottom: 0;
         align-items: center;
         justify-content: space-between;
     }
@@ -31,10 +37,11 @@
         margin-left: 1rem;
         display: block;
         height: 35px;
+        cursor: pointer;
     }
 
     .menu.activate {
-        height: 28vh;
+        height: 35vh;
         visibility: visible;
     }
 
